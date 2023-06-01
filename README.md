@@ -8,11 +8,62 @@ Metron is _not_ a "High-Level Synthesis" tool. Metron does some basic analysis t
 
 Because it targets hardware implementation, Metron can't handle a lot of C++ language features - no pointers, no virtual functions, no pass-by-reference, limited data structures - but it's still sufficient to build CPUs and peripherals that will run on a FPGA.
 
-# TL;DR:
-## [Short essay about hardware vs. software programming](docs/BlueBallMachines.md)
-## [Demo](https://aappleby.github.io/Metron/demo/)
-## [Tutorial](https://aappleby.github.io/Metron/tutorial/)
-## [How Metron Works - Tracing & Symbolic Logic](https://aappleby.github.io/Metron/TemporalLogic.html)
+## How to build Metron
+### Environment
+* g++ 10+
+* gcc 12+
+* python3 3.8+
+* ninja-build
+
+To install dependencies:
+```
+sudo apt install git build-essential ninja-build python3 libicu-dev libsdl2-dev
+```
+Also, build and install dependencies that are not available via apt:
+```
+git clone https://github.com/CLIUtils/CLI11
+git clone https://github.com/tree-sitter/tree-sitter
+git clone https://github.com/tree-sitter/tree-sitter-cpp
+```
+
+### Build Metron
+First, clone our repository
+```
+git clone https://github.com/FreddyYJ/PyVerilog.git
+cd PyVerilog
+```
+
+Then, build Metron with:
+```
+./build.py
+ninja bin/metron
+```
+
+## How to use Metron
+After building Metron, the executable binary will be located at `bin/metron`. You can run Metron with:
+```
+./bin/metron -c <input_file> -o <output_file>
+```
+In this command, `<input_file>` should be header file of C++ and `<output_file>` will be the output Verilog file.
+
+Example C++ header files are stored in [examples](./examples/) directory.
+To convert [examples/tutorial/counter.h](./examples/tutorial/counter.h) to Verilog and store it in `examples/tutorial/counter.sv`, run:
+```
+./bin/metron -c examples/tutorial/counter.h -o examples/tutorial/counter.sv
+```
+
+## How to run FPGA with Verilog program
+We implemented our library called `libverilog` to make the usage of FPGAs more comfortable.
+The library is located in [libverilog](./libverilog/) directory.
+
+More details about libverilog can be found in [libverilog/README.md](./libverilog/README.md).
+
+# Readme by original developers:
+## TL;DR:
+### [Short essay about hardware vs. software programming](docs/BlueBallMachines.md)
+### [Demo](https://aappleby.github.io/Metron/demo/)
+### [Tutorial](https://aappleby.github.io/Metron/tutorial/)
+### [How Metron Works - Tracing & Symbolic Logic](https://aappleby.github.io/Metron/TemporalLogic.html)
 
 ## Metron v0.0.1 Release Notes
 
