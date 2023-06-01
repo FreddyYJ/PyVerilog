@@ -1,0 +1,102 @@
+include rules.ninja
+
+################################################################################
+
+#build_mode = -DCONFIG_RELEASE -O3
+build_mode = -DCONFIG_DEBUG -O0
+
+default_gpp = g++ -g -MMD -std=gnu++2a -Wunused-variable -Werror
+default_inc = -I. -Isymlinks
+
+################################################################################
+# AppLib
+
+build obj/metrolib/appbase/AppHost.o        : compile metrolib/appbase/AppHost.cpp
+build obj/metrolib/appbase/Blitter.o        : compile metrolib/appbase/Blitter.cpp
+build obj/metrolib/appbase/BoardPainter.o   : compile metrolib/appbase/BoardPainter.cpp
+build obj/metrolib/appbase/BoxPainter.o     : compile metrolib/appbase/BoxPainter.cpp
+build obj/metrolib/appbase/Console.o        : compile metrolib/appbase/Console.cpp
+build obj/metrolib/appbase/DummyApp.o       : compile metrolib/appbase/DummyApp.cpp
+build obj/metrolib/appbase/DumpPainter.o    : compile metrolib/appbase/DumpPainter.cpp
+build obj/metrolib/appbase/GLBase.o         : compile metrolib/appbase/GLBase.cpp
+build obj/metrolib/appbase/GridPainter.o    : compile metrolib/appbase/GridPainter.cpp
+build obj/metrolib/appbase/LinePainter.o    : compile metrolib/appbase/LinePainter.cpp
+build obj/metrolib/appbase/Terminus.o       : compile metrolib/appbase/Terminus.cpp
+build obj/metrolib/appbase/TextPainter.o    : compile metrolib/appbase/TextPainter.cpp
+build obj/metrolib/appbase/Viewport.o       : compile metrolib/appbase/Viewport.cpp
+
+build bin/metrolib/libappbase.a : lib $
+  obj/metrolib/appbase/AppHost.o $
+  obj/metrolib/appbase/Blitter.o $
+  obj/metrolib/appbase/BoxPainter.o $
+  obj/metrolib/appbase/Console.o $
+  obj/metrolib/appbase/DummyApp.o $
+  obj/metrolib/appbase/DumpPainter.o $
+  obj/metrolib/appbase/GLBase.o $
+  obj/metrolib/appbase/GridPainter.o $
+  obj/metrolib/appbase/LinePainter.o $
+  obj/metrolib/appbase/Terminus.o $
+  obj/metrolib/appbase/TextPainter.o $
+  obj/metrolib/appbase/Viewport.o
+
+################################################################################
+# AudioLib
+
+build obj/metrolib/audio/Audio.o : compile metrolib/audio/Audio.cpp
+build bin/metrolib/libaudio.a    : lib obj/metrolib/audio/Audio.o
+
+################################################################################
+# CoreLib
+
+build obj/metrolib/core/Blobs.o         : compile metrolib/core/Blobs.cpp
+build obj/metrolib/core/Check.o         : compile metrolib/core/Check.cpp
+build obj/metrolib/core/Constants.o     : compile metrolib/core/Constants.cpp
+build obj/metrolib/core/Dumper.o        : compile metrolib/core/Dumper.cpp
+build obj/metrolib/core/Err.o           : compile metrolib/core/Err.cpp
+build obj/metrolib/core/FieldInfo.o     : compile metrolib/core/FieldInfo.cpp
+build obj/metrolib/core/File.o          : compile metrolib/core/File.cpp
+build obj/metrolib/core/Log.o           : compile metrolib/core/Log.cpp
+build obj/metrolib/core/Platform.o      : compile metrolib/core/Platform.cpp
+build obj/metrolib/core/Result.o        : compile metrolib/core/Result.cpp
+build obj/metrolib/core/StateStack.o    : compile metrolib/core/StateStack.cpp
+build obj/metrolib/core/Tests.o         : compile metrolib/core/Tests.cpp
+build obj/metrolib/core/Types.o         : compile metrolib/core/Types.cpp
+build obj/metrolib/core/Utils.o         : compile metrolib/core/Utils.cpp
+
+build bin/metrolib/libcore.a : lib $
+  obj/metrolib/core/Blobs.o $
+  obj/metrolib/core/Check.o $
+  obj/metrolib/core/Constants.o $
+  obj/metrolib/core/Dumper.o $
+  obj/metrolib/core/Err.o $
+  obj/metrolib/core/FieldInfo.o $
+  obj/metrolib/core/File.o $
+  obj/metrolib/core/Log.o $
+  obj/metrolib/core/Platform.o $
+  obj/metrolib/core/Result.o $
+  obj/metrolib/core/StateStack.o $
+  obj/metrolib/core/Tests.o $
+  obj/metrolib/core/Types.o $
+  obj/metrolib/core/Utils.o
+
+################################################################################
+# GameboyLib
+
+build obj/metrolib/gameboy/Assembler.o    : compile metrolib/gameboy/Assembler.cpp
+build obj/metrolib/gameboy/GBBlitter.o    : compile metrolib/gameboy/GBBlitter.cpp
+build obj/metrolib/gameboy/GBConstants.o  : compile metrolib/gameboy/GBConstants.cpp
+build obj/metrolib/gameboy/MetroBoyCPU.o  : compile metrolib/gameboy/MetroBoyCPU.cpp
+
+build bin/metrolib/libgameboy.a : lib $
+  obj/metrolib/gameboy/Assembler.o $
+  obj/metrolib/gameboy/GBBlitter.o $
+  obj/metrolib/gameboy/GBConstants.o $
+  obj/metrolib/gameboy/MetroBoyCPU.o
+
+################################################################################
+# glad
+
+build obj/metrolib/glad/glad.o : compile metrolib/glad/glad.c
+  includes=-Imetrolib
+
+build bin/metrolib/libglad.a   : lib obj/metrolib/glad/glad.o

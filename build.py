@@ -280,12 +280,21 @@ def build_treesitter():
 
     for n in treesitter_srcs:
         o = path.join(obj_dir, swap_ext(n, ".o"))
-        ninja.build(
-            o,
-            "compile_c",
-            n,
-            includes=base_includes
-        )
+        if 'scanner.cc' not in n:
+            ninja.build(
+                o,
+                "compile_c",
+                n,
+                includes=base_includes
+            )
+        else:
+            ninja.build(
+                o,
+                "compile_cpp",
+                n,
+                includes=base_includes
+            )
+
         treesitter_objs.append(o)
 
 # ------------------------------------------------------------------------------
@@ -407,12 +416,20 @@ def build_treesitter_ems():
 
     for n in treesitter_srcs:
         o = path.join("wasm/obj", swap_ext(n, ".o"))
-        ninja.build(
-            o,
-            "compile_c_ems",
-            n,
-            includes=base_includes
-        )
+        if 'scanner.cc' not in n:
+            ninja.build(
+                o,
+                "compile_c_ems",
+                n,
+                includes=base_includes
+            )
+        else:
+            ninja.build(
+                o,
+                "compile_cpp_ems",
+                n,
+                includes=base_includes
+            )
         treesitter_objs_wasi.append(o)
 
 build_treesitter_ems()
